@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلى أجمَل ما في عُمري ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a0b2e 0%, #311242 50%, #170524 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Cairo', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            color: #fff;
+        }
+
+        /* Floating Background Particles */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: rgba(255, 105, 180, 0.4);
+            animation: floatUp linear infinite;
+            font-size: 20px;
+            filter: drop-shadow(0 0 8px rgba(255, 105, 180, 0.6));
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) scale(0.8) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.8;
+            }
+            85% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main Container */
+        .wrapper {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 550px;
+            padding: 20px;
+        }
+
+        .title-prompt {
+            color: #ffb6c1;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            text-align: center;
+            animation: pulse 2s infinite;
+            text-shadow: 0 0 10px rgba(255, 182, 193, 0.5);
+            font-weight: 600;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* Envelope Styles */
+        .envelope-wrapper {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            background-color: #d13052;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(209, 48, 82, 0.4);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .envelope-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(209, 48, 82, 0.6);
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            z-index: 4;
+            border-top: 130px solid #e03f61;
+            border-right: 160px solid transparent;
+            border-left: 160px solid transparent;
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out 0.2s;
+        }
+
+        .envelope::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            z-index: 3;
+            border-bottom: 130px solid #c02647;
+            border-right: 160px solid #b52040;
+            border-left: 160px solid #d43557;
+            border-radius: 0 0 8px 8px;
+        }
+
+        /* Heart Wax Seal */
+        .wax-seal {
+            position: absolute;
+            top: 110px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #ff2a5f 0%, #a80028 100%);
+            border-radius: 50%;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .wax-seal i {
+            color: #fff;
+            font-size: 24px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        /* Letter Inside */
+        .letter {
+            position: absolute;
+            bottom: 10px;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            background: #fffdf9;
+            background-image: radial-gradient(#f1e3d3 1px, transparent 0);
+            background-size: 16px 16px;
+            border-radius: 12px;
+            padding: 25px 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+            opacity: 0;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 2px solid #f3e5d8;
+        }
+
+        /* Open State Styles */
+        .envelope-wrapper.open .envelope::before {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-wrapper.open .wax-seal {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+            pointer-events: none;
+        }
+
+        .envelope-wrapper.open .letter {
+            position: relative;
+            height: auto;
+            min-height: 280px;
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(-20px);
+            z-index: 20;
+            animation: letterPop 0.8s forwards 0.4s;
+        }
+
+        @keyframes letterPop {
+            0% {
+                transform: translateY(0) scale(0.9);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .letter-content {
+            font-family: 'Amiri', serif;
+            color: #3a2332;
+            font-size: 1.35rem;
+            line-height: 2.1;
+            font-weight: 700;
+            text-shadow: 0 0 1px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+
+        .letter-heart {
+            color: #e03f61;
+            font-size: 1.8rem;
+            margin-top: 10px;
+            animation: heartBeat 1.2s infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.25); }
+        }
+
+        /* Music Controls Overlay */
+        .music-control-btn {
+            margin-top: 25px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .music-control-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .music-control-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+        }
+
+        /* Hidden YouTube Container */
+        #youtube-player {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <div class="wrapper">
+        <div class="title-prompt" id="promptText">
+            <i class="fa-solid fa-envelope-open-text"></i> اضغطي على الظرف عشان تفتحيه ❤️
+        </div>
+
+        <div class="envelope-wrapper" id="envelopeWrapper">
+            <div class="envelope">
+                <div class="wax-seal">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+            </div>
+
+            <div class="letter">
+                <div class="letter-content">
+                    انت احلي حاجه ف عمري انت حبيبتي و روحي انت لو تعرفي انا بحبك قد اي هتبوسيني كتير انت احلي و اجمل حاجه ف عيني و هتفضلي الوحيده ف حياتي هفضل دايما احبك بنفس الشغف ولا عمري هزهق من كلامك ولا اتغير بحبك ❤️
+                </div>
+                <div class="letter-heart">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+            </div>
+        </div>
+
+        <button class="music-control-btn" id="musicBtn">
+            <i class="fa-solid fa-music" id="musicIcon"></i>
+            <span id="musicText">عمرو دياب - شفت الأيام 🎵</span>
+        </button>
+    </div>
+
+    <!-- YouTube IFrame API -->
+    <div id="youtube-player"></div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        // Floating Hearts Generator
+        const heartsContainer = document.getElementById('heartsContainer');
+        const heartIcons = ['fa-heart', 'fa-sparkles', 'fa-heart-pulse'];
+
+        function createHeart() {
+            const heart = document.createElement('i');
+            heart.classList.add('fa-solid', 'floating-heart');
+            
+            // Randomly choose heart or sparkle
+            if (Math.random() > 0.3) {
+                heart.classList.add('fa-heart');
+            } else {
+                heart.classList.add('fa-sparkle');
+            }
+
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.fontSize = (Math.random() * 15 + 12) + 'px';
+            heart.style.opacity = Math.random() * 0.7 + 0.3;
+
+            heartsContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+
+        setInterval(createHeart, 300);
+
+        // Envelope & Music Interaction
+        const envelopeWrapper = document.getElementById('envelopeWrapper');
+        const promptText = document.getElementById('promptText');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicIcon = document.getElementById('musicIcon');
+        
+        let player;
+        let isPlaying = false;
+
+        // YouTube API Ready
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: 's8Yg0Qy_S-U', // Amr Diab - Shoft El Ayam
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': 's8Yg0Qy_S-U'
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Player is ready
+        }
+
+        envelopeWrapper.addEventListener('click', () => {
+            if (!envelopeWrapper.classList.contains('open')) {
+                envelopeWrapper.classList.add('open');
+                promptText.style.opacity = '0';
+                
+                // Play Music on Envelope Click
+                if (player && player.playVideo) {
+                    player.playVideo();
+                    isPlaying = true;
+                    musicBtn.classList.add('visible');
+                }
+            }
+        });
+
+        // Toggle Music Play/Pause
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                player.pauseVideo();
+                musicIcon.className = 'fa-solid fa-play';
+                isPlaying = false;
+            } else {
+                player.playVideo();
+                musicIcon.className = 'fa-solid fa-pause';
+                isPlaying = true;
+            }
+        });
+    </script>
+</body>
+</html>
